@@ -1,0 +1,92 @@
+Git Submodules – Notes
+1. Definition
+
+A submodule is a Git repository embedded inside another Git repository.
+
+The main repository stores a reference (commit pointer) to a specific commit of the submodule.
+
+The submodule remains an independent repository.
+
+2. Why Use Submodules
+
+Reuse common libraries across multiple projects.
+
+Maintain independent version control for a component.
+
+Include external repositories without copying their code.
+
+Keep microservices or modular components separated.
+
+3. How It Works Internally
+
+Git creates a .gitmodules file in the main repository.
+
+The main repository tracks:
+
+Submodule repository URL
+
+Submodule path
+
+Specific commit hash
+
+The actual submodule has its own .git history.
+
+4. Adding a Submodule
+git submodule add <repository-url> <path>
+git commit -m "Added submodule"
+git push
+5. Cloning a Repository with Submodules
+
+Normal clone does NOT download submodules.
+
+Correct way:
+
+git clone --recurse-submodules <repo-url>
+
+If already cloned:
+
+git submodule update --init --recursive
+6. Updating a Submodule
+
+Inside submodule folder:
+
+git pull origin main
+
+Then in main repository:
+
+git add <submodule-folder>
+git commit -m "Updated submodule"
+git push
+7. Important Concepts
+
+The main repo does NOT store submodule code directly.
+
+It stores only a reference to a specific commit.
+
+If the submodule updates, the main repo must update its pointer manually.
+
+8. Advantages
+
+Clear separation of projects.
+
+Independent versioning.
+
+Good for large modular systems.
+
+9. Disadvantages
+
+More complex workflow.
+
+Extra commands during clone.
+
+Can cause confusion if commit pointers are not updated.
+
+10. When to Use
+
+Shared ML utilities across projects.
+
+Shared internal libraries.
+
+Multi-service architectures.
+
+Large academic or research projects with reusable modules.
